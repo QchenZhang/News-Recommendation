@@ -14,7 +14,7 @@ data_index.py: Run data_index.py, it will connect to Elasticsearch engine using 
 data_index_delete.py: Run data_index.py, it will connect to Elasticsearch engine using default of localhost port 9200, and delete all existing index.
 
 
-Elastic_Search.py: Run Elastic_Search.py, it will first take a query sentence as a input, then it will connect to Elasticsearch engine using default of localhost port 9200, and search all indexed news data using BM25 relevance calculation algorithm to calculate the relevance score of each news with the query. After ranking depending on relevance scores, top 5 most relevant news will be returned. 
+Elastic_Search.py: Run Elastic_Search.py, it will first take a query sentence as an input, then it will connect to Elasticsearch engine using default of localhost port 9200, and search all indexed news data using BM25 relevance calculation algorithm to calculate the relevance score of each news with the query. After ranking depending on relevance scores, top 5 news in the most recent date and with the highest relevance score will be returned. 
 
 
 main.py: Run main.py, it will first take a query sentence as a input, then it will connect to Elasticsearch engine using default of localhost port 9200, and search within indexed dataset, summarizing returned news and re-ranking them. Finally, it will return top 5 most relevant news after re-ranking.
