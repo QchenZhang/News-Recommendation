@@ -1,68 +1,19 @@
-**[This code belongs to the "Implementing a CNN for Text Classification in Tensorflow" blog post.](http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/)**
-
-It is slightly simplified implementation of Kim's [Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1408.5882) paper in Tensorflow.
-
 ## Requirements
 
-- Python 3
+- Python 2
 - Tensorflow > 0.12
 - Numpy
 
-## Training
-
-Print parameters:
-
-```bash
-./train.py --help
-```
-
-```
-optional arguments:
-  -h, --help            show this help message and exit
-  --embedding_dim EMBEDDING_DIM
-                        Dimensionality of character embedding (default: 128)
-  --filter_sizes FILTER_SIZES
-                        Comma-separated filter sizes (default: '3,4,5')
-  --num_filters NUM_FILTERS
-                        Number of filters per filter size (default: 128)
-  --l2_reg_lambda L2_REG_LAMBDA
-                        L2 regularizaion lambda (default: 0.0)
-  --dropout_keep_prob DROPOUT_KEEP_PROB
-                        Dropout keep probability (default: 0.5)
-  --batch_size BATCH_SIZE
-                        Batch Size (default: 64)
-  --num_epochs NUM_EPOCHS
-                        Number of training epochs (default: 100)
-  --evaluate_every EVALUATE_EVERY
-                        Evaluate model on dev set after this many steps
-                        (default: 100)
-  --checkpoint_every CHECKPOINT_EVERY
-                        Save model after this many steps (default: 100)
-  --allow_soft_placement ALLOW_SOFT_PLACEMENT
-                        Allow device soft device placement
-  --noallow_soft_placement
-  --log_device_placement LOG_DEVICE_PLACEMENT
-                        Log placement of ops on devices
-  --nolog_device_placement
-
-```
-
-Train:
-
-```bash
-./train.py
-```
-
-## Evaluating
-
-```bash
-./eval.py --eval_train --checkpoint_dir="./runs/1459637919/checkpoints/"
-```
-
-Replace the checkpoint dir with the output from the training. To use your own data, change the `eval.py` script to load your data.
+News_Crawl.py: Run News_Crawl.py, it will crawl news and comments data from Washington Post starting from date d1 to date d2, combines each news with corresponding comment and then store news with comments on the same date into a single Json file named by the date string, like '2017-5-1.json'. By default, date d1 is the date of today and date d2 is the date of three days ago. User can change date d1 and date d2 to whatever past date that they want. 
 
 
-## References
+data_index.py: Run data_index.py, it will connect to Elasticsearch engine using default of localhost port 9200, and index all news data files in the folder '/news'. Each file storing all news and corresponding comments on a same date in the folder '/news' is named by that date. Indexing will use each file's name as index. 
 
-- [Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1408.5882)
-- [A Sensitivity Analysis of (and Practitioners' Guide to) Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1510.03820)
+
+data_index_delete.py: Run data_index.py, it will connect to Elasticsearch engine using default of localhost port 9200, and delete all existing index.
+
+
+Elastic_Search.py: Run Elastic_Search.py, it will first take a query sentence as a input, then it will connect to Elasticsearch engine using default of localhost port 9200, and search all indexed news data using BM25 relevance calculation algorithm to calculate the relevance score of each news with the query. After ranking depending on relevance scores, top 5 most relevant news will be returned. 
+
+
+main.py: Run main.py, it will first take a query sentence as a input, then it will connect to Elasticsearch engine using default of localhost port 9200, and search within indexed dataset, summarizing returned news and re-ranking them. Finally, it will return top 5 most relevant news after re-ranking.
